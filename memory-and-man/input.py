@@ -14,18 +14,26 @@ class LocalInput:
                                        "w": "forward",
                                        "a": "left",
                                        "s": "back",
-                                       "d": "right"}}
+                                       "d": "right",
+                                       "q": "q",
+                                       "e": "e",
+                                       "escape": "escape",
+                                       "tab": "tab", }}
         self.commands = {"walk": 0,
                          "run": 0,
                          "forward": 0,
                          "left": 0,
                          "back": 0,
-                         "right": 0}
+                         "right": 0,
+                         "q": 0,
+                         "e": 0,
+                         "escape": 0,
+                         "tab": 0}
         self.mouse_pos = (0, 0)
 
     def update(self):
-        self.mouse.update()
-        self.keyboard.update()
+        # self.mouse.update()
+        # self.keyboard.update()
         self.check_inputs_for_commands()
 
     def check_inputs_for_commands(self):
@@ -51,14 +59,16 @@ class Mouse:
                       2: 0,
                       3: 0,
                       "pos": self.world.center.pos()}
-        self.event_map = {pygame.MOUSEBUTTONDOWN: self._button_down,
-                          pygame.MOUSEBUTTONUP: self._button_up,
-                          pygame.MOUSEMOTION: self._motion}
+
+        self.event_handler.register_events({pygame.MOUSEBUTTONDOWN: self._button_down,
+                                            pygame.MOUSEBUTTONUP: self._button_up,
+                                            pygame.MOUSEMOTION: self._motion})
         self.btn_duration = 0
         self._max_radius = 30
 
-    def update(self):
-        self.event_handler.handle_events(self.event_map)
+    #
+    # def update(self):
+    #     self.event_handler.handle_events(self.event_map)
 
     def draw(self):
         # if self.btn_duration > 1:
@@ -85,11 +95,11 @@ class Keyboard:
         self.world = world
         self.event_handler = event_handler
         self.keys = {}
-        self.event_map = {KEYDOWN: self._keydown,
-                          pygame.KEYUP: self._keyup}
-
-    def update(self):
-        self.event_handler.handle_events(self.event_map)
+        self.event_handler.register_events({KEYDOWN: self._keydown,
+                                            pygame.KEYUP: self._keyup})
+    #
+    # def update(self):
+    #     self.event_handler.handle_events(self.event_map)
 
     def draw(self):
         pass

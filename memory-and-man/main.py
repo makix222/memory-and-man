@@ -4,25 +4,13 @@ from game import Game
 
 def main():
     pygame.init()
-    running = True
 
     game = Game()
-    game.create_characters()
+    game.create_characters() # todo: move to world
 
-    while running:
+    while game.running:
 
         game.update()
-
-        for event in pygame.event.get(pygame.QUIT):
-            if event.type == pygame.QUIT:
-                running = False
-
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_ESCAPE]:
-            running = False
-
-
-
         pygame.display.flip()
 
     pygame.quit()
